@@ -1,0 +1,8 @@
+# Ignore everything
+*
+
+# Include only specific files
+!.gitignore
+!danielsketchamazingwowiloveit.ino
+!sketch.yaml
+!.vscode
