@@ -129,6 +129,8 @@ void loop() {
           {
             unsigned long _start = millis();
             // begin turning left; stop when 800ms passed or ir_left is detected bcs duh 800ms is pretty long
+            read_sensors();
+            delay(10);
             digitalWrite(13,HIGH);
             digitalWrite(14,LOW);
             analogWrite(25,25); // motor (left)
@@ -154,6 +156,8 @@ void loop() {
           {
             unsigned long _start = millis();
             // begin turning right; stop when 800ms passed or ir_left is detected (to avoid bumping into the left wall, duh bcs 800ms is pretty long)
+            read_sensors();
+            delay(10);
             digitalWrite(13,HIGH);
             digitalWrite(14,LOW);
             analogWrite(25,180); // motor (left)
@@ -186,7 +190,7 @@ void loop() {
 
           
 
-          while (hasObject >= 22 && ir_right == 1) { //search for the wall on the right
+          while (hasObject >= 17 && ir_right == 1) { //search for the wall on the right
             read_sensors();
             digitalWrite(13,HIGH);
             digitalWrite(14,LOW);
