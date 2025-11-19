@@ -171,7 +171,7 @@ void loop() {
         
         } else if ((ir_left == 1 && ir_right == 1 || ir_left == 0 && ir_right == 0) && hasObject <= 14) { //ultrasonic, no ir detection
           
-          while (hasObject < 17) { //reverse far
+          while (hasObject < 18) { //reverse far
             read_sensors();
             digitalWrite(13,LOW); //reverse you blind bitch
             digitalWrite(14,HIGH);
@@ -190,7 +190,7 @@ void loop() {
 
           
 
-          while (hasObject >= 17 && ir_right == 1) { //search for the wall on the right
+          while (hasObject >= 18 && ir_right == 1) { //search for the wall on the right
             read_sensors();
             digitalWrite(13,HIGH);
             digitalWrite(14,LOW);
