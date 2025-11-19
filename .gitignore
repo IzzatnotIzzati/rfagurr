@@ -3,6 +3,6 @@
 
 # Include only specific files
 !.gitignore
-!danielsketchamazingwowiloveit.ino
+!rfagurr.ino
 !sketch.yaml
 !.vscode
