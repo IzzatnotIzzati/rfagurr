@@ -9,7 +9,7 @@ int ir_right;
 Adafruit_SSD1306 display(128, 32, &Wire, -1);
 
 
-// Describe this function...
+// actually soft left lol (too lazy to change the name)
 void sharp_left() {
   digitalWrite(13,HIGH);
   digitalWrite(14,LOW);
@@ -20,7 +20,7 @@ void sharp_left() {
 }
 
 
-// Describe this function...
+// stop (no shit sherlock)
 void motor_stop() {
   digitalWrite(13,HIGH);
   digitalWrite(14,LOW);
@@ -51,7 +51,7 @@ void read_sensors() {
 }
 
 
-// Describe this function...
+// actually soft right
 void sharp_right() {
   digitalWrite(13,HIGH);
   digitalWrite(14,LOW);
@@ -62,7 +62,7 @@ void sharp_right() {
 }
 
 
-// Describe this function...
+// straight, biased to right wall
 void straight() {             // forward, left motor diff speed so that ir sensors work better aka literally following the right wall
   digitalWrite(13,HIGH);
   digitalWrite(14,LOW);
@@ -72,7 +72,7 @@ void straight() {             // forward, left motor diff speed so that ir senso
   analogWrite(15,180); // motor (right)
 }
 
-void reverse() { // seems broken, idk why tbh
+void reverse() { // seems broken, idk why tbh. unused
   digitalWrite(13,LOW);
   digitalWrite(14,HIGH);
   analogWrite(25,100); 
@@ -133,7 +133,7 @@ void loop() {
             delay(10);
             digitalWrite(13,HIGH);
             digitalWrite(14,LOW);
-            analogWrite(25,25); // motor (left)
+            analogWrite(25,50); // motor (left)
             digitalWrite(18,HIGH);
             digitalWrite(19,LOW);
             analogWrite(15,180); // motor (right)
@@ -163,7 +163,7 @@ void loop() {
             analogWrite(25,180); // motor (left)
             digitalWrite(18,HIGH);
             digitalWrite(19,LOW);
-            analogWrite(15,25); // motor (right)
+            analogWrite(15,50); // motor (right)
             while ((millis() - _start) < 800 && digitalRead(22) != 0) {
               delay(5);
             }
