@@ -60,10 +60,10 @@ void sharp_right() {
 void straight() {             // forward, left motor diff speed so that ir sensors work better aka literally following the right wall
   digitalWrite(13,HIGH);
   digitalWrite(14,LOW);
-  analogWrite(25,200); // motor (left)
+  analogWrite(25,180); // motor (left)
   digitalWrite(18,HIGH);
   digitalWrite(19,LOW);
-  analogWrite(15,180); // motor (right)
+  analogWrite(15,200); // motor (right)
 }
 
 void reverse() { // seems broken, idk why tbh. unused
