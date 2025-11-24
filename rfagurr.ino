@@ -1,4 +1,8 @@
 #include <MakerKit.h>
+#include <Wire.h>
+#include <Adafruit_VL53L0X.h>
+
+Adafruit_VL53L0X lox = Adafruit_VL53L0X();
 
 int hasObject;
 int ir_left;
@@ -31,32 +35,22 @@ void motor_stop() {
 }
 
 
-// Read all sensors with proper timing for ultrasonic
 void read_sensors() {
-  // Add a small delay before ultrasonic reading to ensure proper timing
-  delayMicroseconds(10);
-  hasObject = (int)(ultrasonic(12,27));
-  delayMicroseconds(10);  // Add a small delay after reading
+  VL53L0X_RangingMeasurementData_t measure;
+  lox.rangingTest(&measure, false); // pass true to enable debug prints
+  
+  hasObject = (int)(measure.RangeMilliMeter / 10); // Distance in cm from ToF sensor
+  delayMicroseconds(20);  // Add a small delay after reading ToF
   ir_left = (int)(digitalRead(22));
   ir_right = (int)(digitalRead(21));
-  
-  // Reset ultrasonic pins to ensure next reading works
-  pinMode(12, OUTPUT);
-  digitalWrite(12, LOW);
-  delayMicroseconds(2);
-  digitalWrite(12, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(12, LOW);
-  pinMode(12, INPUT);
 }
-
 
 // actually soft right
 void sharp_right() {
   digitalWrite(13,HIGH);
   digitalWrite(14,LOW);
   analogWrite(25,200); //motor (left)
-  digitalWrite(18,HIGH);
+  digitalWrite(18,HIGH);   
   digitalWrite(19,LOW);
   analogWrite(15,100); //motor (right)
 }
@@ -92,10 +86,27 @@ void setup() {
  pinMode(15,OUTPUT);
   pinMode(22, INPUT);
   pinMode(21, INPUT);
+  
+  // Remap I2C: SDA -> GPIO17, SCL -> GPIO16
+  Wire.begin(17, 16);
+  Wire.setClock(400000); // optional: 400kHz
+  
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-display.setTextColor(SSD1306_WHITE);
+  display.setTextColor(SSD1306_WHITE);
+  
+  delay(100);  // Give I2C time to stabilize
+  
+  // Initialize ToF sensor
+  if (!lox.begin()) {
+    display.clearDisplay();
+    display.setCursor(0,0);
+    display.println("VL53L0X init failed!");
+    display.display();
+    while(1);
+  }
 
   pinMode(33, INPUT);
+  
     display.clearDisplay();
   display.display();
   display.setCursor(0,0);
